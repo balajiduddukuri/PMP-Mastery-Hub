@@ -5,141 +5,94 @@ export const DOMAINS: Domain[] = [
   {
     id: 'people',
     name: 'People',
-    description: 'Leading, managing, and supporting the team throughout the project lifecycle.',
+    description: 'Focuses on the skills and activities associated with effectively leading a project team.',
     color: 'indigo',
     tasks: [
       {
         id: 'p1',
-        name: 'Manage Conflict',
+        name: 'Develop a common vision',
         enablers: [
-          { id: 'p1-1', description: 'Interpret the source and stage of the conflict' },
-          { id: 'p1-2', description: 'Analyze the context for the conflict' },
-          { id: 'p1-3', description: 'Evaluate/recommend/reconcile the appropriate conflict resolution solution' }
+          { id: 'p1-1', description: 'Help ensure a shared vision with key stakeholders' },
+          { id: 'p1-2', description: 'Promote the shared vision' },
+          { id: 'p1-3', description: 'Keep the vision current' },
+          { id: 'p1-4', description: 'Break down situations to identify root cause of misunderstanding' }
         ]
       },
       {
         id: 'p2',
-        name: 'Lead a Team',
+        name: 'Manage conflicts',
         enablers: [
-          { id: 'p2-1', description: 'Set a clear vision and mission' },
-          { id: 'p2-2', description: 'Support diversity and inclusion' },
-          { id: 'p2-3', description: 'Value servant leadership' },
-          { id: 'p2-4', description: 'Determine an appropriate leadership style' },
-          { id: 'p2-5', description: 'Inspire, motivate, and influence team members/stakeholders' }
+          { id: 'p2-1', description: 'Identify conflict sources' },
+          { id: 'p2-2', description: 'Analyze the context for the conflict' },
+          { id: 'p2-3', description: 'Implement an agreed-on resolution strategy' },
+          { id: 'p2-4', description: 'Communicate conflict management principles' },
+          { id: 'p2-5', description: 'Establish ground rules environment' },
+          { id: 'p2-6', description: 'Manage and rectify violations' }
         ]
       },
       {
         id: 'p3',
-        name: 'Support Team Performance',
+        name: 'Lead the project team',
         enablers: [
-          { id: 'p3-1', description: 'Appraise team member performance against KPIs' },
-          { id: 'p3-2', description: 'Support and recognize team member growth and development' },
-          { id: 'p3-3', description: 'Determine appropriate feedback approach' }
+          { id: 'p3-1', description: 'Establish expectations at team level' },
+          { id: 'p3-2', description: 'Empower the team' },
+          { id: 'p3-3', description: 'Solve problems' },
+          { id: 'p3-4', description: 'Represent voice of team' },
+          { id: 'p3-5', description: "Support team's varied experiences, skills, perspectives" },
+          { id: 'p3-6', description: 'Determine appropriate leadership style' },
+          { id: 'p3-7', description: 'Establish clear roles and responsibilities' }
         ]
       },
       {
         id: 'p4',
-        name: 'Empower Team Members and Stakeholders',
+        name: 'Engage stakeholders',
         enablers: [
-          { id: 'p4-1', description: 'Organize around team strengths' },
-          { id: 'p4-2', description: 'Support team task accountability' },
-          { id: 'p4-3', description: 'Evaluate demonstration of task accountability' },
-          { id: 'p4-4', description: 'Determine and bestow levels of decision-making authority' }
+          { id: 'p4-1', description: 'Identify stakeholders' },
+          { id: 'p4-2', description: 'Analyze stakeholders' },
+          { id: 'p4-3', description: 'Tailor communication to stakeholder needs' },
+          { id: 'p4-4', description: 'Execute stakeholder engagement plan' },
+          { id: 'p4-5', description: 'Optimize alignment among needs/expectations/objectives' },
+          { id: 'p4-6', description: 'Build trust and influence stakeholders' }
         ]
       },
       {
         id: 'p5',
-        name: 'Ensure team members/stakeholders are adequately trained',
+        name: 'Align stakeholder expectations',
         enablers: [
-          { id: 'p5-1', description: 'Determine required competencies and training needs' },
-          { id: 'p5-2', description: 'Determine training options based on training needs' },
-          { id: 'p5-3', description: 'Allocate resources for training' },
-          { id: 'p5-4', description: 'Measure training outcomes' }
+          { id: 'p5-1', description: 'Categorize stakeholders' },
+          { id: 'p5-2', description: 'Identify stakeholder expectations' },
+          { id: 'p5-3', description: 'Facilitate discussions to align expectations' },
+          { id: 'p5-4', description: 'Organize and act on mentoring opportunities' }
         ]
       },
       {
         id: 'p6',
-        name: 'Build a Team',
+        name: 'Manage stakeholder expectations',
         enablers: [
-          { id: 'p6-1', description: 'Appraise stakeholder skills' },
-          { id: 'p6-2', description: 'Deduce project resource requirements' },
-          { id: 'p6-3', description: 'Continuously assess and refresh team skills' },
-          { id: 'p6-4', description: 'Maintain team and knowledge transfer' }
+          { id: 'p6-1', description: 'Identify internal and external customer expectations' },
+          { id: 'p6-2', description: 'Align and maintain outcomes to expectations' },
+          { id: 'p6-3', description: 'Monitor satisfaction/expectations and respond' }
         ]
       },
       {
         id: 'p7',
-        name: 'Address and remove impediments, obstacles, and blockers',
+        name: 'Help ensure knowledge transfer',
         enablers: [
-          { id: 'p7-1', description: 'Determine critical impediments, obstacles, and blockers for the team' },
-          { id: 'p7-2', description: 'Prioritize critical impediments, obstacles, and blockers' },
-          { id: 'p7-3', description: 'Use network to remove impediments, obstacles, and blockers' },
-          { id: 'p7-4', description: 'Re-assess continually to ensure impediments are being addressed' }
+          { id: 'p7-1', description: 'Identify knowledge critical to the project' },
+          { id: 'p7-2', description: 'Gather knowledge' },
+          { id: 'p7-3', description: 'Foster an environment for knowledge transfer' }
         ]
       },
       {
         id: 'p8',
-        name: 'Negotiate Project Agreements',
+        name: 'Plan and manage communication',
         enablers: [
-          { id: 'p8-1', description: 'Analyze bounds of negotiations for agreement' },
-          { id: 'p8-2', description: 'Assess priorities and determine ultimate objective(s)' },
-          { id: 'p8-3', description: 'Verify objectives of the project agreement are met' },
-          { id: 'p8-4', description: 'Listen to and participate in negotiation' },
-          { id: 'p8-5', description: 'Determine a negotiation strategy' }
-        ]
-      },
-      {
-        id: 'p9',
-        name: 'Collaborate with Stakeholders',
-        enablers: [
-          { id: 'p9-1', description: 'Evaluate engagement needs for stakeholders' },
-          { id: 'p9-2', description: 'Optimize alignment between stakeholder needs and project objectives' },
-          { id: 'p9-3', description: 'Build trust and influence stakeholders to accomplish project objectives' }
-        ]
-      },
-      {
-        id: 'p10',
-        name: 'Build Shared Understanding',
-        enablers: [
-          { id: 'p10-1', description: 'Break down the situation to identify the root cause of misunderstanding' },
-          { id: 'p10-2', description: 'Survey all necessary parties to reach consensus' },
-          { id: 'p10-3', description: 'Support outcome of parties\' agreement' },
-          { id: 'p10-4', description: 'Investigate misunderstandings' }
-        ]
-      },
-      {
-        id: 'p11',
-        name: 'Engage and Support Virtual Teams',
-        enablers: [
-          { id: 'p11-1', description: 'Examine virtual team member needs (e.g., environment, geography, culture)' },
-          { id: 'p11-2', description: 'Investigate alternatives for virtual team member engagement' },
-          { id: 'p11-3', description: 'Implement options for virtual team member connectivity' },
-          { id: 'p11-4', description: 'Evaluate effectiveness of virtual team member engagement' }
-        ]
-      },
-      {
-        id: 'p12',
-        name: 'Define Team Ground Rules',
-        enablers: [
-          { id: 'p12-1', description: 'Communicate organizational principles to the team and stakeholders' },
-          { id: 'p12-2', description: 'Establish an environment that fosters adherence to ground rules' },
-          { id: 'p12-3', description: 'Manage and rectify ground rule violations' }
-        ]
-      },
-      {
-        id: 'p13',
-        name: 'Mentor Relevant Stakeholders',
-        enablers: [
-          { id: 'p13-1', description: 'Allocate time to mentoring' },
-          { id: 'p13-2', description: 'Recognize and act on mentoring opportunities' }
-        ]
-      },
-      {
-        id: 'p14',
-        name: 'Promote team performance through Emotional Intelligence',
-        enablers: [
-          { id: 'p14-1', description: 'Assess behavior through the use of personality indicators' },
-          { id: 'p14-2', description: 'Analyze personality indicators and adjust to the emotional needs of stakeholders' }
+          { id: 'p8-1', description: 'Define a communication strategy' },
+          { id: 'p8-2', description: 'Promote transparency and collaboration' },
+          { id: 'p8-3', description: 'Establish a feedback loop' },
+          { id: 'p8-4', description: 'Understand reporting requirements' },
+          { id: 'p8-5', description: 'Create reports aligned with expectations' },
+          { id: 'p8-6', description: 'Support reporting and governance processes' }
         ]
       }
     ]
@@ -147,166 +100,131 @@ export const DOMAINS: Domain[] = [
   {
     id: 'process',
     name: 'Process',
-    description: 'Developing and managing the methodologies and frameworks to deliver value.',
+    description: 'Reinforces the technical aspects of managing a project to deliver business value.',
     color: 'sky',
     tasks: [
       {
         id: 'pr1',
-        name: 'Execute project with urgency to deliver business value',
+        name: 'Develop an integrated project management plan and plan delivery',
         enablers: [
-          { id: 'pr1-1', description: 'Assess opportunities to deliver value incrementally' },
-          { id: 'pr1-2', description: 'Examine the business value throughout the project' },
-          { id: 'pr1-3', description: 'Support the team to subdivide project tasks to find MVP' }
+          { id: 'pr1-1', description: 'Assess project needs, complexity, magnitude' },
+          { id: 'pr1-2', description: 'Recommend development approach' },
+          { id: 'pr1-3', description: 'Determine critical information requirements' },
+          { id: 'pr1-4', description: 'Recommend project execution strategy' },
+          { id: 'pr1-5', description: 'Create integrated project management plan' },
+          { id: 'pr1-6', description: 'Estimate work effort and resource requirements' },
+          { id: 'pr1-7', description: 'Assess consolidated plans for dependencies/gaps' },
+          { id: 'pr1-8', description: 'Maintain the plan' },
+          { id: 'pr1-9', description: 'Collect and analyze data for decisions' }
         ]
       },
       {
         id: 'pr2',
-        name: 'Manage Communications',
+        name: 'Develop and manage project scope',
         enablers: [
-          { id: 'pr2-1', description: 'Analyze communication needs of all stakeholders' },
-          { id: 'pr2-2', description: 'Determine communication methods, channels, frequency, and level of detail' },
-          { id: 'pr2-3', description: 'Communicate project information and updates effectively' },
-          { id: 'pr2-4', description: 'Confirm communication is understood and feedback is received' }
+          { id: 'pr2-1', description: 'Define scope' },
+          { id: 'pr2-2', description: 'Obtain stakeholder agreement' },
+          { id: 'pr2-3', description: 'Break down scope' }
         ]
       },
       {
         id: 'pr3',
-        name: 'Assess and Manage Risks',
+        name: 'Help ensure value-based delivery',
         enablers: [
-          { id: 'pr3-1', description: 'Determine risk management options' },
-          { id: 'pr3-2', description: 'Iteratively assess and prioritize risks' }
+          { id: 'pr3-1', description: 'Identify value components with stakeholders' },
+          { id: 'pr3-2', description: 'Prioritize work based on value and feedback' },
+          { id: 'pr3-3', description: 'Assess opportunities to deliver value incrementally' },
+          { id: 'pr3-4', description: 'Examine business value throughout project' },
+          { id: 'pr3-5', description: 'Verify measurement system for benefits' },
+          { id: 'pr3-6', description: 'Evaluate delivery options to demonstrate value' }
         ]
       },
       {
         id: 'pr4',
-        name: 'Engage Stakeholders',
+        name: 'Plan and manage resources',
         enablers: [
-          { id: 'pr4-1', description: 'Analyze stakeholders (e.g., power interest grid, influence, impact)' },
-          { id: 'pr4-2', description: 'Categorize stakeholders' },
-          { id: 'pr4-3', description: 'Develop, execute, and validate a strategy for stakeholder engagement' }
+          { id: 'pr4-1', description: 'Define and plan resources based on requirements' },
+          { id: 'pr4-2', description: 'Manage and optimize resource needs/availability' }
         ]
       },
       {
         id: 'pr5',
-        name: 'Plan and Manage Budget and Resources',
+        name: 'Plan and manage procurement',
         enablers: [
-          { id: 'pr5-1', description: 'Estimate budgetary needs based on the scope of the project and lessons learned' },
-          { id: 'pr5-2', description: 'Anticipate future budget challenges' },
-          { id: 'pr5-3', description: 'Monitor budget variations and work with governance to adjust' },
-          { id: 'pr5-4', description: 'Plan and manage resources' }
+          { id: 'pr5-1', description: 'Plan procurement' },
+          { id: 'pr5-2', description: 'Execute procurement management plan' },
+          { id: 'pr5-3', description: 'Select preferred contract types' },
+          { id: 'pr5-4', description: 'Evaluate vendor performance' },
+          { id: 'pr5-5', description: 'Verify objectives of agreement' },
+          { id: 'pr5-6', description: 'Participate in negotiations' },
+          { id: 'pr5-7', description: 'Determine negotiation strategy' },
+          { id: 'pr5-8', description: 'Manage suppliers and contracts' },
+          { id: 'pr5-9', description: 'Plan and manage procurement strategy' },
+          { id: 'pr5-10', description: 'Develop delivery solution' }
         ]
       },
       {
         id: 'pr6',
-        name: 'Plan and Manage Schedule',
+        name: 'Plan and manage finance',
         enablers: [
-          { id: 'pr6-1', description: 'Estimate project tasks (milestones, dependencies, story points)' },
-          { id: 'pr6-2', description: 'Utilize benchmarks and historical data' },
-          { id: 'pr6-3', description: 'Prepare schedule based on methodology' },
-          { id: 'pr6-4', description: 'Measure ongoing progress based on methodology' }
+          { id: 'pr6-1', description: 'Analyze project financial needs' },
+          { id: 'pr6-2', description: 'Quantify risk and contingency allocations' },
+          { id: 'pr6-3', description: 'Plan spend tracking throughout life cycle' },
+          { id: 'pr6-4', description: 'Plan financial reporting' },
+          { id: 'pr6-5', description: 'Anticipate future challenges' },
+          { id: 'pr6-6', description: 'Monitor financial variations' },
+          { id: 'pr6-7', description: 'Manage financial reserves' }
         ]
       },
       {
         id: 'pr7',
-        name: 'Plan and Manage Quality of Products/Deliverables',
+        name: 'Plan and optimize quality of products/deliverables',
         enablers: [
-          { id: 'pr7-1', description: 'Determine quality standard required for project deliverables' },
-          { id: 'pr7-2', description: 'Recommend options for improvement based on quality gaps' },
-          { id: 'pr7-3', description: 'Continuously survey project deliverable quality' }
+          { id: 'pr7-1', description: 'Gather quality requirements' },
+          { id: 'pr7-2', description: 'Plan quality processes and tools' },
+          { id: 'pr7-3', description: 'Execute quality management plan' },
+          { id: 'pr7-4', description: 'Help ensure regulatory compliance' },
+          { id: 'pr7-5', description: 'Manage cost of quality and sustainability' },
+          { id: 'pr7-6', description: 'Conduct ongoing reviews' },
+          { id: 'pr7-7', description: 'Implement continuous improvement' }
         ]
       },
       {
         id: 'pr8',
-        name: 'Plan and Manage Scope',
+        name: 'Plan and manage schedule',
         enablers: [
-          { id: 'pr8-1', description: 'Determine and prioritize requirements' },
-          { id: 'pr8-2', description: 'Break down scope (e.g., WBS, backlog)' },
-          { id: 'pr8-3', description: 'Monitor and validate scope' }
+          { id: 'pr8-1', description: 'Prepare schedule based on development approach' },
+          { id: 'pr8-2', description: 'Coordinate with other projects/operations' },
+          { id: 'pr8-3', description: 'Estimate project tasks' },
+          { id: 'pr8-4', description: 'Utilize benchmarks and historical data' },
+          { id: 'pr8-5', description: 'Create project schedule' },
+          { id: 'pr8-6', description: 'Baseline project schedule' },
+          { id: 'pr8-7', description: 'Execute schedule management plan' },
+          { id: 'pr8-8', description: 'Analyze schedule variation' }
         ]
       },
       {
         id: 'pr9',
-        name: 'Integrate Project Planning Activities',
+        name: 'Evaluate project status',
         enablers: [
-          { id: 'pr9-1', description: 'Consolidate the project/phase plans' },
-          { id: 'pr9-2', description: 'Assess consolidated project plans for dependencies, gaps, and continued business value' },
-          { id: 'pr9-3', description: 'Analyze the data collected' },
-          { id: 'pr9-4', description: 'Collect and analyze data to make informed project decisions' }
+          { id: 'pr9-1', description: 'Develop project metrics, analysis, reconciliation' },
+          { id: 'pr9-2', description: 'Identify and tailor needed artifacts' },
+          { id: 'pr9-3', description: 'Ensure artifacts created, reviewed, updated' },
+          { id: 'pr9-4', description: 'Ensure accessibility of artifacts' },
+          { id: 'pr9-5', description: 'Assess current progress' },
+          { id: 'pr9-6', description: 'Measure, analyze, update metrics' },
+          { id: 'pr9-7', description: 'Communicate project status' },
+          { id: 'pr9-8', description: 'Assess effectiveness of artifact management' }
         ]
       },
       {
         id: 'pr10',
-        name: 'Manage Project Changes',
+        name: 'Manage project closure',
         enablers: [
-          { id: 'pr10-1', description: 'Anticipate and embrace the need for change' },
-          { id: 'pr10-2', description: 'Determine strategy to handle changes' },
-          { id: 'pr10-3', description: 'Execute change management strategy according to the methodology' },
-          { id: 'pr10-4', description: 'Determine a change response to move the project forward' }
-        ]
-      },
-      {
-        id: 'pr11',
-        name: 'Plan and Manage Procurement',
-        enablers: [
-          { id: 'pr11-1', description: 'Define resource requirements and needs' },
-          { id: 'pr11-2', description: 'Communicate resource requirements' },
-          { id: 'pr11-3', description: 'Manage suppliers and contracts' },
-          { id: 'pr11-4', description: 'Plan and manage procurement strategy' },
-          { id: 'pr11-5', description: 'Develop a delivery solution' }
-        ]
-      },
-      {
-        id: 'pr12',
-        name: 'Manage Project Artifacts',
-        enablers: [
-          { id: 'pr12-1', description: 'Determine the requirements (what, when, where, who, etc.) for managing the artifacts' },
-          { id: 'pr12-2', description: 'Validate that the project information is kept up to date and accessible to all stakeholders' },
-          { id: 'pr12-3', description: 'Assess the effectiveness of the management of the project artifacts' }
-        ]
-      },
-      {
-        id: 'pr13',
-        name: 'Determine appropriate project methodology/methods and practices',
-        enablers: [
-          { id: 'pr13-1', description: 'Assess project needs, complexity, and magnitude' },
-          { id: 'pr13-2', description: 'Recommend project execution strategy (e.g., contracting, finance)' },
-          { id: 'pr13-3', description: 'Recommend a project methodology/approach (i.e., predictive, agile, hybrid)' },
-          { id: 'pr13-4', description: 'Use iterative, incremental practices throughout the project life cycle' }
-        ]
-      },
-      {
-        id: 'pr14',
-        name: 'Establish Project Governance Structure',
-        enablers: [
-          { id: 'pr14-1', description: 'Determine appropriate governance for a project' },
-          { id: 'pr14-2', description: 'Define escalation paths and thresholds' }
-        ]
-      },
-      {
-        id: 'pr15',
-        name: 'Manage Project Issues',
-        enablers: [
-          { id: 'pr15-1', description: 'Recognize when an issue becomes a risk and vice versa' },
-          { id: 'pr15-2', description: 'Attack issues with the optimal action to achieve project success' },
-          { id: 'pr15-3', description: 'Collaborate with relevant stakeholders on the approach to resolve the issues' }
-        ]
-      },
-      {
-        id: 'pr16',
-        name: 'Ensure Knowledge Transfer for Project Continuity',
-        enablers: [
-          { id: 'pr16-1', description: 'Discuss project responsibilities within team' },
-          { id: 'pr16-2', description: 'Outline expectations for working environment' },
-          { id: 'pr16-3', description: 'Confirm approach for knowledge transfer' }
-        ]
-      },
-      {
-        id: 'pr17',
-        name: 'Plan and Manage Project/Phase Closure or Transitions',
-        enablers: [
-          { id: 'pr17-1', description: 'Determine criteria for closure of the project or phase' },
-          { id: 'pr17-2', description: 'Validate readiness for transition (e.g., to operations or next phase)' },
-          { id: 'pr17-3', description: 'Conclude activities to close out project or phase' }
+          { id: 'pr10-1', description: 'Obtain project stakeholder approval' },
+          { id: 'pr10-2', description: 'Determine successful closure criteria' },
+          { id: 'pr10-3', description: 'Validate readiness for transition' },
+          { id: 'pr10-4', description: 'Conclude activities (lessons learned, retrospectives, procurement, financials, resources)' }
         ]
       }
     ]
@@ -314,48 +232,90 @@ export const DOMAINS: Domain[] = [
   {
     id: 'business',
     name: 'Business Environment',
-    description: 'Managing the organizational context and compliance requirements.',
+    description: 'Highlights the connection between projects and organizational strategy.',
     color: 'emerald',
     tasks: [
       {
         id: 'be1',
-        name: 'Plan and Manage Project Compliance',
+        name: 'Define and establish project governance',
         enablers: [
-          { id: 'be1-1', description: 'Confirm project compliance requirements (security, health, safety, etc.)' },
-          { id: 'be1-2', description: 'Classify compliance categories' },
-          { id: 'be1-3', description: 'Analyze the consequences of noncompliance' },
-          { id: 'be1-4', description: 'Determine necessary approach and action to address compliance needs' },
-          { id: 'be1-5', description: 'Measure the extent to which the project is in compliance' }
+          { id: 'be1-1', description: 'Describe and establish structure, rules, procedures, reporting, ethics, policies' },
+          { id: 'be1-2', description: 'Define success metrics' },
+          { id: 'be1-3', description: 'Outline governance escalation paths and thresholds' }
         ]
       },
       {
         id: 'be2',
-        name: 'Evaluate and Deliver Project Benefits and Value',
+        name: 'Plan and manage project compliance',
         enablers: [
-          { id: 'be2-1', description: 'Investigate that benefits are identified' },
-          { id: 'be2-2', description: 'Document agreement on ownership for ongoing benefit realization' },
-          { id: 'be2-3', description: 'Verify measurement system is in place to track benefits' },
-          { id: 'be2-4', description: 'Evaluate delivery options to demonstrate value' },
-          { id: 'be2-5', description: 'Appraise stakeholders of value gain progress' }
+          { id: 'be2-1', description: 'Confirm compliance requirements' },
+          { id: 'be2-2', description: 'Classify compliance categories' },
+          { id: 'be2-3', description: 'Determine threats to compliance' },
+          { id: 'be2-4', description: 'Analyze and support compliance' },
+          { id: 'be2-5', description: 'Analyze consequences of non-compliance' },
+          { id: 'be2-6', description: 'Determine necessary approach and actions' },
+          { id: 'be2-7', description: 'Measure extent of compliance' }
         ]
       },
       {
         id: 'be3',
-        name: 'Evaluate and address external business environment changes',
+        name: 'Manage and control changes',
         enablers: [
-          { id: 'be3-1', description: 'Survey changes to external business environment (e.g., regulations, technology, geopolitical, market)' },
-          { id: 'be3-2', description: 'Assess and prioritize impact on project scope/backlog based on changes in external business environment' },
-          { id: 'be3-3', description: 'Recommend options for scope/backlog changes' },
-          { id: 'be3-4', description: 'Continually review external business environment for impacts on project scope/backlog' }
+          { id: 'be3-1', description: 'Execute change control process' },
+          { id: 'be3-2', description: 'Communicate status of proposed changes' },
+          { id: 'be3-3', description: 'Implement approved changes' },
+          { id: 'be3-4', description: 'Update project documentation' }
         ]
       },
       {
         id: 'be4',
-        name: 'Support Organizational Change',
+        name: 'Remove impediments and manage issues',
         enablers: [
-          { id: 'be4-1', description: 'Assess organizational culture' },
-          { id: 'be4-2', description: 'Evaluate impact of organizational change to project and determine required actions' },
-          { id: 'be4-3', description: 'Evaluate impact of the project to the organization and determine required actions' }
+          { id: 'be4-1', description: 'Evaluate impact of impediments' },
+          { id: 'be4-2', description: 'Prioritize and highlight impediments' },
+          { id: 'be4-3', description: 'Determine intervention strategy' },
+          { id: 'be4-4', description: 'Reassess continually' },
+          { id: 'be4-5', description: 'Recognize when risk becomes issue' },
+          { id: 'be4-6', description: 'Collaborate with stakeholders on resolution' }
+        ]
+      },
+      {
+        id: 'be5',
+        name: 'Plan and manage risk',
+        enablers: [
+          { id: 'be5-1', description: 'Identify risks' },
+          { id: 'be5-2', description: 'Analyze risks' },
+          { id: 'be5-3', description: 'Monitor and control risks' },
+          { id: 'be5-4', description: 'Develop risk management plan' },
+          { id: 'be5-5', description: 'Maintain risk register' },
+          { id: 'be5-6', description: 'Execute risk management plan' },
+          { id: 'be5-7', description: 'Communicate risk status and impact' }
+        ]
+      },
+      {
+        id: 'be6',
+        name: 'Continuous improvement',
+        enablers: [
+          { id: 'be6-1', description: 'Utilize lessons learned' },
+          { id: 'be6-2', description: 'Ensure continuous improvement processes updated' },
+          { id: 'be6-3', description: 'Update organizational process assets' }
+        ]
+      },
+      {
+        id: 'be7',
+        name: 'Support organizational change',
+        enablers: [
+          { id: 'be7-1', description: 'Assess organizational culture' },
+          { id: 'be7-2', description: 'Evaluate impact of organizational change on project' }
+        ]
+      },
+      {
+        id: 'be8',
+        name: 'Evaluate external business environment changes',
+        enablers: [
+          { id: 'be8-1', description: 'Survey changes to external environment' },
+          { id: 'be8-2', description: 'Assess and prioritize impact on scope/backlog' },
+          { id: 'be8-3', description: 'Continually review for impacts' }
         ]
       }
     ]
