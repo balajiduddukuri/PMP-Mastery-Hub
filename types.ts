@@ -16,6 +16,7 @@ export interface Domain {
   description: string;
   tasks: Task[];
   color: string;
+  coverage: number; // Added field for exam weight percentage
 }
 
 export interface AIInsight {

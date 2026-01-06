@@ -7,6 +7,7 @@ export const DOMAINS: Domain[] = [
     name: 'People',
     description: 'Focuses on the skills and activities associated with effectively leading a project team.',
     color: 'indigo',
+    coverage: 33,
     tasks: [
       {
         id: 'p1',
@@ -102,6 +103,7 @@ export const DOMAINS: Domain[] = [
     name: 'Process',
     description: 'Reinforces the technical aspects of managing a project to deliver business value.',
     color: 'sky',
+    coverage: 41,
     tasks: [
       {
         id: 'pr1',
@@ -234,6 +236,7 @@ export const DOMAINS: Domain[] = [
     name: 'Business Environment',
     description: 'Highlights the connection between projects and organizational strategy.',
     color: 'emerald',
+    coverage: 26,
     tasks: [
       {
         id: 'be1',

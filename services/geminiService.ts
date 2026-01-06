@@ -107,3 +107,34 @@ Focus on how these specific items connect to each other in a real-world project 
     throw new Error("Synthesis generation failed.");
   }
 };
+
+export const getGlobalExamNotes = async (): Promise<{notes: string[], mindset: string}> => {
+  const prompt = `As a world-class PMP coach, provide a list of 7 crucial "Key Exam Notes" that apply across the entire PMP ECO (People, Process, Business). 
+  Also provide a "Master Mindset" paragraph that encapsulates the Servant Leadership and Value-driven approach required to pass.
+  Format as JSON.`;
+
+  const response = await ai.models.generateContent({
+    model: "gemini-3-flash-preview",
+    contents: prompt,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: {
+          notes: { 
+            type: Type.ARRAY, 
+            items: { type: Type.STRING },
+            description: "7 high-impact study notes." 
+          },
+          mindset: { 
+            type: Type.STRING, 
+            description: "The PMP Master Mindset summary." 
+          }
+        },
+        required: ["notes", "mindset"]
+      }
+    }
+  });
+
+  return JSON.parse(response.text.trim());
+};
