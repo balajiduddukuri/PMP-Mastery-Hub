@@ -24,4 +24,5 @@ export interface AIInsight {
   commonPitfalls: string[];
   modernPerspective: string;
   tipsToRemember: string[];
+  debugPrompt?: string;
 }

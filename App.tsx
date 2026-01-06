@@ -1,13 +1,13 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { Domain, Task, AIInsight } from './types';
+import { Domain, Task, Enabler, AIInsight } from './types';
 import { DOMAINS } from './constants';
-import { getTaskInsights } from './services/geminiService';
+import { getTaskInsights, getSynthesizedTaskInsights } from './services/geminiService';
 import InsightPanel from './components/InsightPanel';
 
 const App: React.FC = () => {
   const [selectedDomain, setSelectedDomain] = useState<Domain | null>(DOMAINS[0]);
-  const [selectedTaskForInsight, setSelectedTaskForInsight] = useState<{task: Task, domain: Domain} | null>(null);
+  const [selectedContext, setSelectedContext] = useState<{task: Task, domain: Domain, enabler: Enabler | null} | null>(null);
   const [insight, setInsight] = useState<AIInsight | null>(null);
   const [insightLoading, setInsightLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -48,12 +48,35 @@ const App: React.FC = () => {
     );
   }, [selectedDomain, searchTerm]);
 
-  const handleFetchInsight = async (task: Task, domain: Domain) => {
-    setSelectedTaskForInsight({ task, domain });
+  const handleFetchEnablerInsight = async (enabler: Enabler, task: Task, domain: Domain) => {
+    setSelectedContext({ enabler, task, domain });
     setInsightLoading(true);
     setInsight(null);
     try {
-      const data = await getTaskInsights(task.name, domain.name);
+      const data = await getTaskInsights(task.name, domain.name, enabler.description);
+      setInsight(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setInsightLoading(false);
+    }
+  };
+
+  const handleFetchTaskSynthesis = async (task: Task, domain: Domain) => {
+    const selectedSubtasks = task.enablers
+      .filter(e => completedEnablers.has(e.id))
+      .map(e => e.description);
+
+    if (selectedSubtasks.length === 0) {
+      alert("Please select (check) at least one sub-task to synthesize.");
+      return;
+    }
+
+    setSelectedContext({ enabler: null, task, domain });
+    setInsightLoading(true);
+    setInsight(null);
+    try {
+      const data = await getSynthesizedTaskInsights(task.name, domain.name, selectedSubtasks);
       setInsight(data);
     } catch (err) {
       console.error(err);
@@ -84,7 +107,6 @@ const App: React.FC = () => {
     return { totalEnablers, completedCount, percentage };
   }, [completedEnablers]);
 
-  // Dynamic color safe-listing/mapping to ensure Tailwind picks them up
   const colorMap: Record<string, string> = {
     indigo: 'indigo',
     sky: 'sky',
@@ -110,7 +132,7 @@ const App: React.FC = () => {
             <div className="relative flex-1 md:w-80">
               <input 
                 type="text" 
-                placeholder="Find a task or enabler..." 
+                placeholder="Find a task or sub-task..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-11 pr-4 py-2.5 bg-slate-100 border-transparent rounded-2xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 transition-all placeholder-slate-400 border border-slate-100 focus:shadow-lg focus:shadow-indigo-50"
@@ -228,51 +250,71 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              {filteredTasks.map(task => (
-                <div key={task.id} className="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-                    <h3 className="text-2xl font-black text-slate-800 tracking-tight leading-tight max-w-xl">{task.name}</h3>
-                    <button 
-                      onClick={() => handleFetchInsight(task, selectedDomain)}
-                      className="flex-shrink-0 flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-[11px] font-black rounded-2xl hover:bg-indigo-600 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-slate-200"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                      CONSULT AI EXPERT
-                    </button>
-                  </div>
+              {filteredTasks.map(task => {
+                const selectedCount = task.enablers.filter(e => completedEnablers.has(e.id)).length;
+                return (
+                  <div key={task.id} className="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+                      <h3 className="text-2xl font-black text-slate-800 tracking-tight leading-tight max-w-xl">{task.name}</h3>
+                      <button 
+                        onClick={() => handleFetchTaskSynthesis(task, selectedDomain)}
+                        disabled={selectedCount === 0}
+                        className={`flex-shrink-0 flex items-center gap-2 px-6 py-3 text-[11px] font-black rounded-2xl transition-all shadow-lg ${
+                          selectedCount > 0 
+                          ? 'bg-indigo-600 text-white hover:bg-slate-900 hover:scale-105 active:scale-95 shadow-indigo-100' 
+                          : 'bg-slate-100 text-slate-300 cursor-not-allowed shadow-none'
+                        }`}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        SYNTHESIZE {selectedCount} SELECTED
+                      </button>
+                    </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {task.enablers.map(enabler => {
-                      const isCompleted = completedEnablers.has(enabler.id);
-                      const color = colorMap[selectedDomain.color] || 'indigo';
-                      return (
-                        <div 
-                          key={enabler.id}
-                          onClick={() => handleToggleEnabler(enabler.id)}
-                          className={`flex items-start gap-4 p-5 rounded-3xl cursor-pointer transition-all border-2 ${
-                            isCompleted 
-                              ? `bg-${color}-50/50 border-${color}-100` 
-                              : 'bg-slate-50 border-transparent hover:border-slate-200 hover:bg-white'
-                          }`}
-                        >
-                          <div className={`mt-0.5 flex-shrink-0 w-6 h-6 rounded-xl border-2 flex items-center justify-center transition-all ${
-                            isCompleted 
-                              ? `bg-${color}-500 border-${color}-500 shadow-lg shadow-${color}-200` 
-                              : 'border-slate-300 bg-white'
-                          }`}>
-                            {isCompleted && (
-                              <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                            )}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {task.enablers.map(enabler => {
+                        const isCompleted = completedEnablers.has(enabler.id);
+                        const color = colorMap[selectedDomain.color] || 'indigo';
+                        return (
+                          <div 
+                            key={enabler.id}
+                            className={`group flex items-center justify-between gap-4 p-5 rounded-3xl transition-all border-2 ${
+                              isCompleted 
+                                ? `bg-${color}-50/50 border-${color}-100` 
+                                : 'bg-slate-50 border-transparent hover:border-slate-200 hover:bg-white'
+                            }`}
+                          >
+                            <div 
+                              onClick={() => handleToggleEnabler(enabler.id)}
+                              className="flex items-start gap-4 cursor-pointer flex-1"
+                            >
+                              <div className={`mt-0.5 flex-shrink-0 w-6 h-6 rounded-xl border-2 flex items-center justify-center transition-all ${
+                                isCompleted 
+                                  ? `bg-${color}-500 border-${color}-500 shadow-lg shadow-${color}-200` 
+                                  : 'border-slate-300 bg-white'
+                              }`}>
+                                {isCompleted && (
+                                  <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                                )}
+                              </div>
+                              <p className={`text-sm leading-relaxed font-bold ${isCompleted ? 'text-slate-400 line-through' : 'text-slate-700'}`}>
+                                {enabler.description}
+                              </p>
+                            </div>
+                            
+                            <button 
+                              onClick={() => handleFetchEnablerInsight(enabler, task, selectedDomain)}
+                              title="Get AI Insight for this specific sub-task"
+                              className="flex-shrink-0 p-2.5 rounded-xl bg-white border border-slate-200 text-indigo-600 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 hover:shadow-lg transition-all transform active:scale-95 group-hover:scale-105"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </button>
                           </div>
-                          <p className={`text-sm leading-relaxed font-bold ${isCompleted ? 'text-slate-400 line-through' : 'text-slate-700'}`}>
-                            {enabler.description}
-                          </p>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               
               {filteredTasks.length === 0 && (
                 <div className="py-20 text-center">
@@ -286,12 +328,13 @@ const App: React.FC = () => {
       </main>
 
       <InsightPanel 
-        task={selectedTaskForInsight?.task || null} 
-        domain={selectedTaskForInsight?.domain || null}
+        enabler={selectedContext?.enabler || null}
+        task={selectedContext?.task || null} 
+        domain={selectedContext?.domain || null}
         insight={insight}
         loading={insightLoading}
         onClose={() => {
-          setSelectedTaskForInsight(null);
+          setSelectedContext(null);
           setInsight(null);
         }}
       />
