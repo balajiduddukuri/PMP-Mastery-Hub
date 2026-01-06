@@ -8,7 +8,7 @@ export const getTaskInsights = async (taskName: string, domainName: string): Pro
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
     contents: `As an expert Senior Project Manager with 20+ years of experience, provide deep insights for the PMP task: "${taskName}" within the "${domainName}" domain. 
-    Focus on practical reality vs theoretical framework.`,
+    Focus on practical reality vs theoretical framework. Provide a few catchy tips or mnemonics to remember this for the exam.`,
     config: {
       responseMimeType: "application/json",
       responseSchema: {
@@ -28,9 +28,14 @@ export const getTaskInsights = async (taskName: string, domainName: string): Pro
           modernPerspective: { 
             type: Type.STRING, 
             description: "How AI or modern remote/hybrid work is changing this task." 
+          },
+          tipsToRemember: {
+            type: Type.ARRAY,
+            items: { type: Type.STRING },
+            description: "Catchy tips or mnemonics to help remember this concept for the exam."
           }
         },
-        required: ["summary", "bestPractices", "commonPitfalls", "modernPerspective"]
+        required: ["summary", "bestPractices", "commonPitfalls", "modernPerspective", "tipsToRemember"]
       }
     }
   });
