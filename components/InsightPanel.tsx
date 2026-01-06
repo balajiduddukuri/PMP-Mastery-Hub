@@ -1,195 +1,121 @@
 
-import React, { useState } from 'react';
-import { AIInsight, Task, Domain, Enabler } from '../types';
+import React, { useState, useEffect } from 'react';
+import { AIInsight, Task, Domain, Enabler, ProjectLifecycle } from '../types';
+import { getTaskInsights, getSynthesizedTaskInsights } from '../services/geminiService';
+import VoiceCoachModal from './VoiceCoachModal';
 
 interface InsightPanelProps {
   enabler: Enabler | null;
   task: Task | null;
   domain: Domain | null;
-  insight: AIInsight | null;
+  initialInsight: AIInsight | null;
   loading: boolean;
   onClose: () => void;
 }
 
-const InsightPanel: React.FC<InsightPanelProps> = ({ enabler, task, domain, insight, loading, onClose }) => {
-  const [copied, setCopied] = useState(false);
-  const [showPrompt, setShowPrompt] = useState(false);
+const InsightPanel: React.FC<InsightPanelProps> = ({ enabler, task, domain, initialInsight, loading: initialLoading, onClose }) => {
+  const [lifecycle, setLifecycle] = useState<ProjectLifecycle>('hybrid');
+  const [insight, setInsight] = useState<AIInsight | null>(initialInsight);
+  const [loading, setLoading] = useState(initialLoading);
+  const [showVoiceCoach, setShowVoiceCoach] = useState(false);
 
-  if (!task || !domain || (!enabler && !loading && !insight)) return null;
+  useEffect(() => { setInsight(initialInsight); setLoading(initialLoading); }, [initialInsight, initialLoading]);
 
-  const handleCopy = () => {
-    if (!insight) return;
-
-    const contextTitle = enabler ? `PMP Sub-task Insight: ${enabler.description}` : `PMP Task Synthesis: ${task?.name}`;
-    const formattedText = `
-${contextTitle}
-Parent Task: ${task?.name}
-Domain: ${domain?.name}
-
-EXECUTIVE SUMMARY
-${insight.summary}
-
-EXAM MEMORIZATION TIPS
-${insight.tipsToRemember.map(tip => `• ${tip}`).join('\n')}
-
-BEST PRACTICES
-${insight.bestPractices.map(bp => `• ${bp}`).join('\n')}
-
-COMMON PITFALLS
-${insight.commonPitfalls.map(cp => `• ${cp}`).join('\n')}
-
-MODERN PERSPECTIVE
-${insight.modernPerspective}
-    `.trim();
-
-    navigator.clipboard.writeText(formattedText).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+  const refreshWithLifecycle = async (newLifecycle: ProjectLifecycle) => {
+    if (!task || !domain) return;
+    setLifecycle(newLifecycle);
+    setLoading(true);
+    try {
+      let data;
+      if (enabler) {
+        data = await getTaskInsights(task.name, domain.name, enabler.description, newLifecycle);
+      } else {
+        data = await getSynthesizedTaskInsights(task.name, domain.name, task.enablers.map(e => e.description), newLifecycle);
+      }
+      setInsight(data);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (!task || !domain || (!enabler && !loading && !insight && !initialLoading)) return null;
 
   const isSynthesis = !enabler && !!insight;
 
   return (
-    <div className={`fixed inset-y-0 right-0 w-full md:w-1/3 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out border-l border-slate-200 overflow-y-auto ${task ? 'translate-x-0' : 'translate-x-full'}`}>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-slate-800 tracking-tight">
-            {isSynthesis ? 'Task Synthesis' : 'Expert AI Insights'}
-          </h2>
-          <div className="flex items-center gap-2">
-            {insight && !loading && (
-              <button 
-                onClick={handleCopy}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] font-black transition-all ${
-                  copied 
-                    ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' 
-                    : 'bg-slate-100 text-slate-500 hover:bg-indigo-600 hover:text-white hover:shadow-lg hover:shadow-indigo-100'
-                }`}
-              >
-                {copied ? (
-                  <>
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                    COPIED!
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-                    COPY INSIGHTS
-                  </>
-                )}
-              </button>
-            )}
-            <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
+    <div className={`fixed inset-y-0 right-0 w-full md:w-2/5 bg-white shadow-2xl z-50 transform transition-transform duration-300 border-l border-slate-200 overflow-y-auto ${task ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className="p-8">
+        <div className="flex justify-between items-center mb-8">
+          <div className="flex flex-col">
+            <h2 className="text-2xl font-black text-slate-800">
+              {isSynthesis ? 'Strategic Synthesis' : 'ECO Mastery Drill'}
+            </h2>
+            {isSynthesis && <span className="text-[10px] font-black text-indigo-600 uppercase tracking-widest">Multi-Enabler View</span>}
           </div>
+          <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full text-slate-400">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
         </div>
 
-        <div className="mb-8">
-          <span className={`px-3 py-1 rounded-full text-[10px] font-black bg-${domain?.color}-100 text-${domain?.color}-700 uppercase tracking-widest`}>
-            {domain?.name} Domain
-          </span>
-          <div className="mt-4 space-y-2">
-            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-              {isSynthesis ? 'Synthesizing Selected Sub-tasks for:' : 'Selected Sub-task:'}
-            </h4>
-            <h3 className="text-xl font-black text-slate-800 leading-tight">
-              {enabler ? enabler.description : task?.name}
-            </h3>
-            {!isSynthesis && <p className="text-[11px] font-bold text-indigo-400 uppercase tracking-tighter">Part of: {task?.name}</p>}
-          </div>
+        <div className="flex gap-2 mb-8 p-1 bg-slate-100 rounded-2xl">
+          {(['predictive', 'agile', 'hybrid'] as ProjectLifecycle[]).map(l => (
+            <button key={l} onClick={() => refreshWithLifecycle(l)} className={`flex-1 py-2 text-[10px] font-black uppercase rounded-xl transition-all ${lifecycle === l ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-400'}`}>{l}</button>
+          ))}
+        </div>
+
+        <div className="mb-6 space-y-2">
+          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Focusing On:</span>
+          <p className="text-lg font-black text-slate-800 leading-tight">
+            {enabler ? enabler.description : task.name}
+          </p>
         </div>
 
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 space-y-4">
-            <div className="animate-spin rounded-xl h-12 w-12 border-4 border-indigo-600 border-t-transparent shadow-lg shadow-indigo-100"></div>
-            <p className="text-slate-500 animate-pulse font-bold text-sm">
-              {isSynthesis ? 'Synthesizing selected items...' : 'Targeting specific strategy...'}
-            </p>
+          <div className="py-24 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-indigo-600 border-t-transparent mx-auto mb-4"></div>
+            <p className="text-slate-400 font-black text-xs uppercase">Consulting PMBOK 7...</p>
           </div>
         ) : insight ? (
-          <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-            <section>
-              <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">
-                {isSynthesis ? 'Synthesis Summary' : 'Expert Focus Summary'}
-              </h4>
-              <p className="text-slate-600 leading-relaxed font-medium italic border-l-4 border-indigo-200 pl-4">"{insight.summary}"</p>
-            </section>
-
-            {insight.tipsToRemember && insight.tipsToRemember.length > 0 && (
-              <section className="bg-amber-50 p-5 rounded-[1.5rem] border border-amber-100">
-                <h4 className="text-[10px] font-black text-amber-700 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                   Memorization Tip
-                </h4>
-                <ul className="space-y-2">
-                  {insight.tipsToRemember.map((tip, i) => (
-                    <li key={i} className="text-sm font-bold text-amber-900 leading-snug">
-                      • {tip}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            <section>
-              <h4 className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em] mb-4">
-                {isSynthesis ? 'Combined Best Practices' : 'Best Practices'}
-              </h4>
-              <ul className="space-y-3">
-                {insight.bestPractices.map((bp, i) => (
-                  <li key={i} className="flex items-start text-slate-700 group">
-                    <span className="text-indigo-400 mr-3 mt-0.5 group-hover:scale-125 transition-transform">✦</span>
-                    <span className="text-sm font-medium leading-relaxed">{bp}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section>
-              <h4 className="text-[10px] font-black text-rose-500 uppercase tracking-[0.2em] mb-4">Common Pitfalls</h4>
-              <ul className="space-y-3">
-                {insight.commonPitfalls.map((cp, i) => (
-                  <li key={i} className="flex items-start text-slate-700 group">
-                    <span className="text-rose-400 mr-3 mt-0.5 group-hover:animate-pulse text-lg leading-none">⚠</span>
-                    <span className="text-sm font-medium leading-relaxed">{cp}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className="bg-slate-50 p-6 rounded-[2rem] border border-slate-200">
-              <h4 className="text-[10px] font-black text-slate-800 uppercase tracking-[0.2em] mb-3">Modern Perspective</h4>
-              <p className="text-slate-600 text-sm leading-relaxed font-medium">{insight.modernPerspective}</p>
-            </section>
-
-            <div className="pt-10 border-t border-slate-100">
-              <button 
-                onClick={() => setShowPrompt(!showPrompt)}
-                className="text-[10px] font-black text-slate-300 hover:text-indigo-400 transition-colors uppercase tracking-widest flex items-center gap-2"
-              >
-                <svg className={`w-3 h-3 transform transition-transform ${showPrompt ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
-                {showPrompt ? 'Hide AI Audit' : 'Show AI Audit'}
-              </button>
-              
-              {showPrompt && insight.debugPrompt && (
-                <div className="mt-4 p-4 bg-slate-900 rounded-2xl animate-in fade-in zoom-in-95 duration-200">
-                  <h5 className="text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-2">System Prompt Sent</h5>
-                  <pre className="text-[10px] text-slate-300 font-mono whitespace-pre-wrap leading-relaxed">
-                    {insight.debugPrompt}
-                  </pre>
-                </div>
-              )}
+          <div className="space-y-10 pb-20">
+            <div className="p-6 bg-indigo-600 rounded-3xl text-white shadow-xl shadow-indigo-100">
+               <span className="text-[10px] font-black opacity-60 uppercase block mb-1">Mnemonic Anchor</span>
+               <p className="text-2xl font-black tracking-tight">{insight.mnemonic}</p>
             </div>
+
+            <button onClick={() => setShowVoiceCoach(true)} className="w-full p-6 bg-slate-900 rounded-3xl text-left border-2 border-slate-800 hover:border-indigo-500 transition-all group flex items-center gap-4">
+               <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg"><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z"></path></svg></div>
+               <div><h4 className="text-white font-black text-sm uppercase">Start Voice Coach</h4><p className="text-slate-400 text-xs">Simulate Stakeholder Crisis</p></div>
+            </button>
+
+            <section className="bg-slate-50 p-6 rounded-3xl border border-slate-200">
+              <h4 className="text-[10px] font-black text-slate-400 uppercase mb-3">ITTO Relationship Explorer (Traditional)</h4>
+              <div className="space-y-4">
+                {['inputs', 'tools', 'outputs'].map(type => (
+                  <div key={type}>
+                    <span className="text-[9px] font-black text-indigo-400 uppercase">{type}</span>
+                    <p className="text-xs font-bold text-slate-600 leading-tight">{(insight.ittos as any)[type]?.join(', ') || 'N/A'}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <h4 className="text-[10px] font-black text-slate-800 uppercase mb-3">Domain Interconnectivity</h4>
+              <p className="text-sm font-medium text-slate-600 leading-relaxed bg-amber-50 p-4 rounded-2xl border border-amber-100">{insight.interconnectivity}</p>
+            </section>
+
+            <section>
+              <h4 className="text-[10px] font-black text-indigo-600 uppercase mb-4">Strategic Mastery</h4>
+              <ul className="space-y-4">
+                {insight.bestPractices.map((bp, i) => (
+                  <li key={i} className="flex gap-4 items-start"><span className="w-6 h-6 bg-indigo-50 rounded-lg flex items-center justify-center text-[10px] font-black text-indigo-600">{i+1}</span><span className="text-sm font-bold text-slate-700">{bp}</span></li>
+                ))}
+              </ul>
+            </section>
           </div>
-        ) : (
-          <div className="text-center py-20 text-slate-400">
-            <svg className="w-16 h-16 mx-auto mb-4 opacity-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <p className="font-bold">Click the AI icon next to any sub-task for expert strategy.</p>
-          </div>
-        )}
+        ) : null}
       </div>
+      {showVoiceCoach && <VoiceCoachModal context={enabler?.description || task.name} onClose={() => setShowVoiceCoach(false)} />}
     </div>
   );
 };

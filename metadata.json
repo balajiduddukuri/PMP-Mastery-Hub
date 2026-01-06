@@ -1,5 +1,7 @@
 {
   "name": "PMP Mastery Hub",
-  "description": "An interactive explorer for the Project Management Professional (PMP) Exam Content Outline. Explore domains, tasks, and enablers with AI-driven insights and progress tracking.",
-  "requestFramePermissions": []
+  "description": "An interactive explorer for the Project Management Professional (PMP) Exam Content Outline with AI-driven insights, Voice Coaching, and advanced exam simulations.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }
