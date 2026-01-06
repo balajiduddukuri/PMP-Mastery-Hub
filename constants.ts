@@ -13,17 +13,19 @@ export const DOMAINS: Domain[] = [
         id: 'p1',
         name: 'Develop a common vision',
         hook: 'One North Star',
+        imagePrompt: 'Collaborative team pointing towards a shining glowing north star in a digital landscape',
         enablers: [
-          { id: 'p1-1', description: 'Help ensure a shared vision with key stakeholders', hook: 'Stakeholder Buy-in' },
-          { id: 'p1-2', description: 'Promote the shared vision', hook: 'Be the Evangelist' },
-          { id: 'p1-3', description: 'Keep the vision current', hook: 'Vision Check-up' },
-          { id: 'p1-4', description: 'Break down situations to identify root cause of misunderstanding', hook: '5-Whys Method' }
+          { id: 'p1-1', description: 'Help ensure a shared vision with key stakeholders', hook: 'Stakeholder Buy-in', imagePrompt: 'Group of diverse business leaders shaking hands in a futuristic boardroom' },
+          { id: 'p1-2', description: 'Promote the shared vision', hook: 'Be the Evangelist', imagePrompt: 'A glowing megaphone broadcasting light and geometric shapes' },
+          { id: 'p1-3', description: 'Keep the vision current', hook: 'Vision Check-up', imagePrompt: 'Digital magnifying glass over a glowing map' },
+          { id: 'p1-4', description: 'Break down situations to identify root cause of misunderstanding', hook: '5-Whys Method', imagePrompt: 'Tree roots extending into a digital circuit board' }
         ]
       },
       {
         id: 'p2',
         name: 'Manage conflicts',
         hook: 'EDUCE: Evaluate, Define, Understand, Choose, Execute',
+        imagePrompt: 'Two geometric light beams converging into a single peaceful white light',
         enablers: [
           { id: 'p2-1', description: 'Identify conflict sources', hook: 'Trace the Spark' },
           { id: 'p2-2', description: 'Analyze the context for the conflict', hook: 'Context is King' },
@@ -37,6 +39,7 @@ export const DOMAINS: Domain[] = [
         id: 'p3',
         name: 'Lead the project team',
         hook: 'Servant Leadership: Lead by Serving',
+        imagePrompt: 'A hand holding up a platform where other glowing figures are standing and working',
         enablers: [
           { id: 'p3-1', description: 'Establish expectations at team level', hook: 'Social Contract' },
           { id: 'p3-2', description: 'Empower the team', hook: 'Trust over Micro-mgmt' },
@@ -51,6 +54,7 @@ export const DOMAINS: Domain[] = [
         id: 'p4',
         name: 'Engage stakeholders',
         hook: 'Engage, Don\'t Just Manage',
+        imagePrompt: 'Interconnected nodes of light representing a network of engaged partners',
         enablers: [
           { id: 'p4-1', description: 'Identify stakeholders', hook: 'Cast a Wide Net' },
           { id: 'p4-2', description: 'Analyze stakeholders', hook: 'Power/Interest Grid' },
@@ -64,6 +68,7 @@ export const DOMAINS: Domain[] = [
         id: 'p5',
         name: 'Align stakeholder expectations',
         hook: 'The Expectation Bridge',
+        imagePrompt: 'A glowing glass bridge connecting two separate mountain peaks',
         enablers: [
           { id: 'p5-1', description: 'Categorize stakeholders', hook: 'Grouping for Impact' },
           { id: 'p5-2', description: 'Identify stakeholder expectations', hook: 'Uncover the "Ask"' },
@@ -75,6 +80,7 @@ export const DOMAINS: Domain[] = [
         id: 'p6',
         name: 'Manage stakeholder expectations',
         hook: 'Outcome Alignment',
+        imagePrompt: 'A precision balance scale weighing gold light against blue light',
         enablers: [
           { id: 'p6-1', description: 'Identify internal and external customer expectations', hook: 'Customer Centric' },
           { id: 'p6-2', description: 'Align and maintain outcomes to expectations', hook: 'Keeping Promises' },
@@ -85,6 +91,7 @@ export const DOMAINS: Domain[] = [
         id: 'p7',
         name: 'Help ensure knowledge transfer',
         hook: 'Bridge the Gap',
+        imagePrompt: 'A glowing scroll unfurling into a digital library',
         enablers: [
           { id: 'p7-1', description: 'Identify knowledge critical to the project', hook: 'High-Value Intel' },
           { id: 'p7-2', description: 'Gather knowledge', hook: 'Knowledge Harvesting' },
@@ -95,6 +102,7 @@ export const DOMAINS: Domain[] = [
         id: 'p8',
         name: 'Plan and manage communication',
         hook: 'The Transparent Loop',
+        imagePrompt: 'A complex 3D fiber optic cable transmitting waves of light in a circle',
         enablers: [
           { id: 'p8-1', description: 'Define a communication strategy', hook: 'The Roadmap' },
           { id: 'p8-2', description: 'Promote transparency and collaboration', hook: 'Open Doors' },
@@ -117,6 +125,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr1',
         name: 'Develop an integrated project management plan and plan delivery',
         hook: 'The Master Blueprint',
+        imagePrompt: 'A blueprint that is coming to life in 3D holographic light',
         enablers: [
           { id: 'pr1-1', description: 'Assess project needs, complexity, magnitude', hook: 'Scoping the Beast' },
           { id: 'pr1-2', description: 'Recommend development approach', hook: 'Choosing the Engine' },
@@ -133,6 +142,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr2',
         name: 'Develop and manage project scope',
         hook: 'Boundary Watch',
+        imagePrompt: 'A bright glowing laser fence defining a precise square area',
         enablers: [
           { id: 'pr2-1', description: 'Define scope', hook: 'Drawing the Line' },
           { id: 'pr2-2', description: 'Obtain stakeholder agreement', hook: 'The Handshake' },
@@ -143,6 +153,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr3',
         name: 'Help ensure value-based delivery',
         hook: 'Value First',
+        imagePrompt: 'A golden trophy being assembled from smaller blue crystal pieces',
         enablers: [
           { id: 'pr3-1', description: 'Identify value components with stakeholders', hook: 'Outcome definition' },
           { id: 'pr3-2', description: 'Prioritize work based on value and feedback', hook: 'MoSCoW/Prioritization' },
@@ -156,6 +167,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr4',
         name: 'Plan and manage resources',
         hook: 'Asset Allocation',
+        imagePrompt: 'Geometric shapes of different colors being perfectly slotted into a grid',
         enablers: [
           { id: 'pr4-1', description: 'Define and plan resources based on requirements', hook: 'Resource Plan' },
           { id: 'pr4-2', description: 'Manage and optimize resource needs/availability', hook: 'Leveling & Smoothing' }
@@ -165,6 +177,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr5',
         name: 'Plan and manage procurement',
         hook: 'Strategic Sourcing',
+        imagePrompt: 'A global map with glowing trade lines and contract icons',
         enablers: [
           { id: 'pr5-1', description: 'Plan procurement', hook: 'Make-or-Buy' },
           { id: 'pr5-2', description: 'Execute procurement management plan', hook: 'Bidding' },
@@ -181,6 +194,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr6',
         name: 'Plan and manage finance',
         hook: 'Fiscal Stewardship',
+        imagePrompt: 'A bar chart made of glowing crystal stacks of coins',
         enablers: [
           { id: 'pr6-1', description: 'Analyze project financial needs', hook: 'Budgeting' },
           { id: 'pr6-2', description: 'Quantify risk and contingency allocations', hook: 'Reserves' },
@@ -195,6 +209,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr7',
         name: 'Plan and optimize quality of products/deliverables',
         hook: 'The Excellence Loop',
+        imagePrompt: 'A shiny diamond being inspected by a robotic precision arm',
         enablers: [
           { id: 'pr7-1', description: 'Gather quality requirements', hook: 'Standard Setting' },
           { id: 'pr7-2', description: 'Plan quality processes and tools', hook: 'Quality Design' },
@@ -209,6 +224,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr8',
         name: 'Plan and manage schedule',
         hook: 'Time Precision',
+        imagePrompt: 'A futuristic clock with multiple concentric rotating rings of light',
         enablers: [
           { id: 'pr8-1', description: 'Prepare schedule based on development approach', hook: 'Timing the Engine' },
           { id: 'pr8-2', description: 'Coordinate with other projects/operations', hook: 'Dependency Check' },
@@ -224,6 +240,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr9',
         name: 'Evaluate project status',
         hook: 'Reality Check',
+        imagePrompt: 'A dashboard with glowing gauges and pulsing indicators',
         enablers: [
           { id: 'pr9-1', description: 'Develop project metrics, analysis, reconciliation', hook: 'KPI Design' },
           { id: 'pr9-2', description: 'Identify and tailor needed artifacts', hook: 'Artifact Setup' },
@@ -239,6 +256,7 @@ export const DOMAINS: Domain[] = [
         id: 'pr10',
         name: 'Manage project closure',
         hook: 'Clean Exit',
+        imagePrompt: 'A door made of light opening into a vast bright horizon',
         enablers: [
           { id: 'pr10-1', description: 'Obtain project stakeholder approval', hook: 'Final Handshake' },
           { id: 'pr10-2', description: 'Determine successful closure criteria', hook: 'The Finish Line' },
@@ -259,6 +277,7 @@ export const DOMAINS: Domain[] = [
         id: 'be1',
         name: 'Define and establish project governance',
         hook: 'The Guardrails',
+        imagePrompt: 'A network of glowing paths through a dark forest',
         enablers: [
           { id: 'be1-1', description: 'Describe and establish structure, rules, procedures, reporting, ethics, policies', hook: 'Governance Framework' },
           { id: 'be1-2', description: 'Define success metrics', hook: 'Measuring Success' },
@@ -269,6 +288,7 @@ export const DOMAINS: Domain[] = [
         id: 'be2',
         name: 'Plan and manage project compliance',
         hook: 'Integrity Check',
+        imagePrompt: 'A glowing shield with a checkmark in the center',
         enablers: [
           { id: 'be2-1', description: 'Confirm compliance requirements', hook: 'Mandate Check' },
           { id: 'be2-2', description: 'Classify compliance categories', hook: 'Risk Types' },
@@ -283,6 +303,7 @@ export const DOMAINS: Domain[] = [
         id: 'be3',
         name: 'Manage and control changes',
         hook: 'Change is Constant',
+        imagePrompt: 'A single drop of water creating expanding concentric ripples',
         enablers: [
           { id: 'be3-1', description: 'Execute change control process', hook: 'CCB Flow' },
           { id: 'be3-2', description: 'Communicate status of proposed changes', hook: 'Feedback Cycle' },
@@ -294,6 +315,7 @@ export const DOMAINS: Domain[] = [
         id: 'be4',
         name: 'Remove impediments and manage issues',
         hook: 'Path Clearer',
+        imagePrompt: 'A bright glowing laser cutting through a jagged rock barrier',
         enablers: [
           { id: 'be4-1', description: 'Evaluate impact of impediments', hook: 'Blocker Analysis' },
           { id: 'be4-2', description: 'Prioritize and highlight impediments', hook: 'Urgency Ranking' },
@@ -307,6 +329,7 @@ export const DOMAINS: Domain[] = [
         id: 'be5',
         name: 'Plan and manage risk',
         hook: 'Uncertainty Radar',
+        imagePrompt: 'A radar dish emitting waves of light to reveal hidden geometric shapes',
         enablers: [
           { id: 'be5-1', description: 'Identify risks', hook: 'What If?' },
           { id: 'be5-2', description: 'Analyze risks', hook: 'Probability/Impact' },
@@ -321,6 +344,7 @@ export const DOMAINS: Domain[] = [
         id: 'be6',
         name: 'Continuous improvement',
         hook: 'Kaizen Mindset',
+        imagePrompt: 'A spiral staircase reaching upwards into a bright sky',
         enablers: [
           { id: 'be6-1', description: 'Utilize lessons learned', hook: 'Wisdom Use' },
           { id: 'be6-2', description: 'Ensure continuous improvement processes updated', hook: 'Process Evolution' },
@@ -331,6 +355,7 @@ export const DOMAINS: Domain[] = [
         id: 'be7',
         name: 'Support organizational change',
         hook: 'Culture Catalyst',
+        imagePrompt: 'A drop of blue liquid turning a glass of white liquid into a swirling sky blue',
         enablers: [
           { id: 'be7-1', description: 'Assess organizational culture', hook: 'Culture Audit' },
           { id: 'be7-2', description: 'Evaluate impact of organizational change on project', hook: 'External Shift' }
@@ -340,6 +365,7 @@ export const DOMAINS: Domain[] = [
         id: 'be8',
         name: 'Evaluate external business environment changes',
         hook: 'External Radar',
+        imagePrompt: 'A telescope looking out at a horizon made of glowing data streams',
         enablers: [
           { id: 'be8-1', description: 'Survey changes to external environment', hook: 'Environmental Scan' },
           { id: 'be8-2', description: 'Assess and prioritize impact on scope/backlog', hook: 'Backlog Refinement' },

@@ -4,6 +4,36 @@ import { AIInsight, Question, ExamDifficulty, ProjectLifecycle } from "../types"
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
+export const generateThematicImage = async (prompt: string): Promise<string | null> => {
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash-image',
+      contents: {
+        parts: [
+          {
+            text: `Create a professional, minimalist 3D isometric render for a corporate project management tool. Theme: ${prompt}. Style: Soft lighting, glassmorphism textures, clean lines, white background, high-end tech aesthetic.`,
+          },
+        ],
+      },
+      config: {
+        imageConfig: {
+          aspectRatio: "16:9",
+        },
+      },
+    });
+
+    for (const part of response.candidates?.[0]?.content?.parts || []) {
+      if (part.inlineData) {
+        return `data:image/png;base64,${part.inlineData.data}`;
+      }
+    }
+    return null;
+  } catch (error) {
+    console.error("Image generation failed:", error);
+    return null;
+  }
+};
+
 export const getTaskInsights = async (
   taskName: string, 
   domainName: string, 

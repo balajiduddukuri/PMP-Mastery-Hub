@@ -5,6 +5,7 @@ import { DOMAINS } from './constants';
 import { getTaskInsights, getSynthesizedTaskInsights, getGlobalExamNotes, generateExamQuestions } from './services/geminiService';
 import InsightPanel from './components/InsightPanel';
 import ExamModal from './components/ExamModal';
+import AIThematicImage from './components/AIThematicImage';
 
 const HighlightText: React.FC<{ text: string; highlight: string }> = ({ text, highlight }) => {
   if (!highlight || !highlight.trim()) return <>{text}</>;
@@ -233,50 +234,69 @@ const App: React.FC = () => {
               {selectedDomain?.tasks.map((task, idx) => {
                 const isWeak = (wrongTaskCounts[task.id] || 0) > 1;
                 return (
-                  <div key={task.id} className={`bg-white rounded-[2rem] p-8 border-2 transition-all ${isWeak ? 'border-rose-200 bg-rose-50/10' : 'border-slate-100'}`}>
-                    <div className="flex flex-col gap-1 mb-6">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-4">
-                          <span className="text-3xl font-black text-slate-200 italic">{(idx + 1).toString().padStart(2, '0')}</span>
-                          <div className="flex items-center gap-3">
-                            <h3 className="text-2xl font-black text-slate-800">
-                              {task.name}
-                              {isWeak && <span className="ml-2 text-[10px] bg-rose-500 text-white px-3 py-1 rounded-full uppercase">Review Priority</span>}
-                            </h3>
-                            <button 
-                              onClick={() => handleFetchTaskSynthesis(task, selectedDomain!)}
-                              title="Generate Task Synthesis"
-                              className="p-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all shadow-sm"
-                            >
-                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clipRule="evenodd" /></svg>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      {task.hook && (
-                        <span className="text-xs font-black text-amber-500 italic uppercase tracking-widest flex items-center gap-1 pl-12">
-                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1a1 1 0 112 0v1a1 1 0 11-2 0zM13.464 15.05a1 1 0 010 1.414l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 0z"></path></svg>
-                          Hook: {task.hook}
-                        </span>
-                      )}
+                  <div key={task.id} className={`bg-white rounded-[2rem] p-0 border-2 transition-all overflow-hidden ${isWeak ? 'border-rose-200 bg-rose-50/10' : 'border-slate-100'}`}>
+                    {/* Cinematic Header with AI Image */}
+                    <div className="relative h-48">
+                      <AIThematicImage 
+                        id={task.id} 
+                        prompt={task.imagePrompt || task.name} 
+                        className="w-full h-full" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-12">
-                      {task.enablers.map(e => (
-                        <div key={e.id} className={`flex items-center justify-between p-5 rounded-3xl border-2 transition-all ${completedEnablers.has(e.id) ? 'bg-indigo-50 border-indigo-100' : 'bg-slate-50 border-transparent'}`}>
-                          <div className="flex flex-col gap-1 cursor-pointer flex-1" onClick={() => setCompletedEnablers(prev => { const n = new Set(prev); if (n.has(e.id)) n.delete(e.id); else n.add(e.id); return n; })}>
-                            <div className="flex items-center gap-4">
-                              <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 ${completedEnablers.has(e.id) ? 'bg-indigo-600 border-indigo-600' : 'bg-white border-slate-300'}`}>{completedEnablers.has(e.id) && <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>}</div>
-                              <span className="text-sm font-bold text-slate-700 leading-tight">{e.description}</span>
+                    
+                    <div className="p-8 -mt-16 relative z-10">
+                      <div className="flex flex-col gap-1 mb-6">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-4">
+                            <span className="text-3xl font-black text-slate-200 italic">{(idx + 1).toString().padStart(2, '0')}</span>
+                            <div className="flex items-center gap-3">
+                              <h3 className="text-2xl font-black text-slate-800">
+                                {task.name}
+                                {isWeak && <span className="ml-2 text-[10px] bg-rose-500 text-white px-3 py-1 rounded-full uppercase">Review Priority</span>}
+                              </h3>
+                              <button 
+                                onClick={() => handleFetchTaskSynthesis(task, selectedDomain!)}
+                                title="Generate Task Synthesis"
+                                className="p-2 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all shadow-sm"
+                              >
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clipRule="evenodd" /></svg>
+                              </button>
                             </div>
-                            {e.hook && (
-                              <span className="pl-10 text-[10px] font-bold text-slate-400 italic">
-                                Anchor: {e.hook}
-                              </span>
-                            )}
                           </div>
-                          <button onClick={() => handleFetchEnablerInsight(e, task, selectedDomain!)} className="p-2 bg-white rounded-xl text-indigo-600 hover:bg-indigo-600 hover:text-white shadow-sm transition-all flex-shrink-0 ml-2"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></button>
                         </div>
-                      ))}
+                        {task.hook && (
+                          <span className="text-xs font-black text-amber-500 italic uppercase tracking-widest flex items-center gap-1 pl-12">
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1a1 1 0 112 0v1a1 1 0 11-2 0zM13.464 15.05a1 1 0 010 1.414l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 0z"></path></svg>
+                            Hook: {task.hook}
+                          </span>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-12">
+                        {task.enablers.map(e => (
+                          <div key={e.id} className={`flex items-start justify-between p-5 rounded-3xl border-2 transition-all ${completedEnablers.has(e.id) ? 'bg-indigo-50 border-indigo-100' : 'bg-slate-50 border-transparent'}`}>
+                            <div className="flex flex-col gap-3 cursor-pointer flex-1" onClick={() => setCompletedEnablers(prev => { const n = new Set(prev); if (n.has(e.id)) n.delete(e.id); else n.add(e.id); return n; })}>
+                              <div className="flex items-center gap-4">
+                                <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 ${completedEnablers.has(e.id) ? 'bg-indigo-600 border-indigo-600' : 'bg-white border-slate-300'}`}>{completedEnablers.has(e.id) && <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>}</div>
+                                <span className="text-sm font-bold text-slate-700 leading-tight">{e.description}</span>
+                              </div>
+                              <div className="flex gap-4 items-center pl-10">
+                                <AIThematicImage 
+                                  id={e.id} 
+                                  prompt={e.imagePrompt || e.description} 
+                                  className="w-12 h-12 rounded-xl flex-shrink-0 border border-slate-200 shadow-sm" 
+                                />
+                                {e.hook && (
+                                  <span className="text-[10px] font-bold text-slate-400 italic">
+                                    Anchor: {e.hook}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            <button onClick={() => handleFetchEnablerInsight(e, task, selectedDomain!)} className="p-2 bg-white rounded-xl text-indigo-600 hover:bg-indigo-600 hover:text-white shadow-sm transition-all flex-shrink-0 ml-2 mt-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 );

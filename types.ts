@@ -3,6 +3,7 @@ export interface Enabler {
   id: string;
   description: string;
   hook?: string; // Memory anchor
+  imagePrompt?: string; 
 }
 
 export interface Task {
@@ -10,6 +11,7 @@ export interface Task {
   name: string;
   enablers: Enabler[];
   hook?: string; // Memory anchor
+  imagePrompt?: string;
 }
 
 export interface Domain {
